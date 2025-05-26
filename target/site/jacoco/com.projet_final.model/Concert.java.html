@@ -17,9 +17,9 @@ public class Concert extends Evenement {
 <span class="nc" id="L17">    }</span>
 
     @Override
-    public void afficherDetails() {
-<span class="nc" id="L21">        System.out.println(&quot;Concert: &quot; + nom + &quot; | Artiste: &quot; + artiste + &quot; | Genre: &quot; + genreMusical + &quot; | Lieu: &quot; + lieu + &quot; | Date: &quot; + date);</span>
-<span class="nc" id="L22">    }</span>
+    public String afficherDetails() {
+<span class="nc" id="L21">        return &quot;Concert: &quot; + nom + &quot; | Artiste: &quot; + artiste + &quot; | Genre: &quot; + genreMusical + &quot; | Lieu: &quot; + lieu + &quot; | Date: &quot; + date;</span>
+    }
 
     public String getArtiste() {
 <span class="nc" id="L25">        return artiste;</span>

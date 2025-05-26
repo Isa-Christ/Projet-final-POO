@@ -11,8 +11,10 @@ module com.projet_final {
     exports com.projet_final.model;
     exports com.projet_final.service;
     exports com.projet_final.util;
+    exports com.projet_final.controller;
 
     opens com.projet_final to javafx.fxml;
+    opens com.projet_final.controller to javafx.fxml;
     opens com.projet_final.model ;
     opens com.projet_final.service to org.junit.platform.commons;
     opens com.projet_final.util;

@@ -1,4 +1,8 @@
 com/projet_final/util/JsonUtilTest.class
+com/projet_final/service/GestionEvenementsTest.class
+com/projet_final/model/IntervenantTest.class
+com/projet_final/model/ConcertTest.class
 com/projet_final/model/EvenementTest.class
 com/projet_final/model/ParticipantTest.class
-com/projet_final/service/GestionEvenementsTest.class
+com/projet_final/model/ConferenceTest.class
+com/projet_final/model/OrganisateurTest.class

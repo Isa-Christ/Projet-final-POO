@@ -6,20 +6,22 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
-
-import com.projet_final.model.Concert;
-import com.projet_final.model.Evenement;
 
 /**
  * JavaFX App
  */
-public class App {
+public class App extends Application {
 
-    public static void main(String[] args) {
-         Evenement e1 = new Concert("E1", "Concert Pop", LocalDateTime.of(2025, 6, 10, 21, 30), "Palais des Congres", 1000, "Adele", "pop" );
-         System.out.println(e1.afficherDetails());
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
+        primaryStage.setTitle("Gestion des Événements");
+        primaryStage.setScene(new Scene(root, 900, 600));
+        primaryStage.setResizable(true);
+        primaryStage.show();
     }
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 }

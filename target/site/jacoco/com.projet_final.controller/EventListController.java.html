@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EventListController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">event</a> &gt; <a href="index.source.html" class="el_package">com.projet_final.controller</a> &gt; <span class="el_source">EventListController.java</span></div><h1>EventListController.java</h1><pre class="source lang-java linenums">package com.projet_final.controller;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.ListChangeListener;
+import com.projet_final.model.Evenement;
+import com.projet_final.service.GestionEvenements;
+import java.time.LocalDateTime;
+import javafx.scene.layout.HBox;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.stage.Stage;
+import java.io.IOException;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+
+<span class="nc" id="L23">public class EventListController {</span>
+    
+    @FXML private TextField searchField;
+    @FXML private TableView&lt;Evenement&gt; eventTable;
+    @FXML private TableColumn&lt;Evenement, String&gt; colNom;
+    @FXML private TableColumn&lt;Evenement, LocalDateTime&gt; colDate;
+    @FXML private TableColumn&lt;Evenement, String&gt; colLieu;
+    @FXML private TableColumn&lt;Evenement, String&gt; colType;
+    @FXML private TableColumn&lt;Evenement, Integer&gt; colCapacite;
+    @FXML private TableColumn&lt;Evenement, Void&gt; colActions;
+    @FXML private ComboBox&lt;String&gt; typeFilter;
+    @FXML private DatePicker dateFilter;
+    @FXML private Pagination pagination;
+
+    private GestionEvenements gestionEvenements;
+    private FilteredList&lt;Evenement&gt; filteredEvents;
+    private static final int ITEMS_PER_PAGE = 10;
+
+    @FXML
+    public void initialize() {
+<span class="nc" id="L43">        gestionEvenements = GestionEvenements.getInstance();</span>
+<span class="nc" id="L44">        setupTableColumns();</span>
+<span class="nc" id="L45">        setupFilters();</span>
+<span class="nc" id="L46">        loadEvents();</span>
+<span class="nc" id="L47">        setupPagination();</span>
+        
+        // Sauvegarde automatique après chaque modification
+<span class="nc" id="L50">        eventTable.getItems().addListener((ListChangeListener&lt;Evenement&gt;) c -&gt; {</span>
+            try {
+<span class="nc" id="L52">                gestionEvenements.saveToFile(&quot;evenements.json&quot;);</span>
+<span class="nc" id="L53">            } catch (IOException e) {</span>
+<span class="nc" id="L54">                showError(&quot;Erreur de sauvegarde&quot;, e);</span>
+<span class="nc" id="L55">            }</span>
+<span class="nc" id="L56">        });</span>
+<span class="nc" id="L57">    }</span>
+
+    private void setupTableColumns() {
+<span class="nc" id="L60">        colNom.setCellValueFactory(cellData -&gt; </span>
+<span class="nc" id="L61">            new SimpleStringProperty(cellData.getValue().getNom()));</span>
+            
+<span class="nc" id="L63">        colDate.setCellValueFactory(cellData -&gt; </span>
+<span class="nc" id="L64">            new SimpleObjectProperty&lt;&gt;(cellData.getValue().getDate()));</span>
+            
+<span class="nc" id="L66">        colLieu.setCellValueFactory(cellData -&gt; </span>
+<span class="nc" id="L67">            new SimpleStringProperty(cellData.getValue().getLieu()));</span>
+            
+<span class="nc" id="L69">        colType.setCellValueFactory(cellData -&gt; </span>
+<span class="nc" id="L70">            new SimpleStringProperty(cellData.getValue().getClass().getSimpleName()));</span>
+            
+<span class="nc" id="L72">        colCapacite.setCellValueFactory(cellData -&gt; </span>
+<span class="nc" id="L73">            new SimpleIntegerProperty(cellData.getValue().getCapaciteMax()).asObject());</span>
+        
+<span class="nc" id="L75">        setupActionColumn();</span>
+<span class="nc" id="L76">    }</span>
+
+    private void setupActionColumn() {
+<span class="nc" id="L79">        colActions.setCellFactory(col -&gt; new TableCell&lt;&gt;() {</span>
+<span class="nc" id="L80">            private final Button editButton = new Button(&quot;Modifier&quot;);</span>
+<span class="nc" id="L81">            private final Button deleteButton = new Button(&quot;Supprimer&quot;);</span>
+<span class="nc" id="L82">            private final HBox actionBox = new HBox(5, editButton, deleteButton);</span>
+
+            {
+<span class="nc" id="L85">                editButton.getStyleClass().addAll(&quot;action-button&quot;, &quot;edit-button&quot;);</span>
+<span class="nc" id="L86">                deleteButton.getStyleClass().addAll(&quot;action-button&quot;, &quot;delete-button&quot;);</span>
+                
+<span class="nc" id="L88">                editButton.setOnAction(e -&gt; onEdit(getTableView().getItems().get(getIndex())));</span>
+<span class="nc" id="L89">                deleteButton.setOnAction(e -&gt; onDelete(getTableView().getItems().get(getIndex())));</span>
+<span class="nc" id="L90">            }</span>
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+<span class="nc" id="L94">                super.updateItem(item, empty);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">                setGraphic(empty ? null : actionBox);</span>
+<span class="nc" id="L96">            }</span>
+        });
+<span class="nc" id="L98">    }</span>
+
+    private void setupFilters() {
+        // Configuration des filtres
+<span class="nc" id="L102">        typeFilter.setItems(FXCollections.observableArrayList(&quot;Tous&quot;, &quot;Concert&quot;, &quot;Conférence&quot;));</span>
+<span class="nc" id="L103">        typeFilter.setValue(&quot;Tous&quot;);</span>
+
+<span class="nc" id="L105">        searchField.textProperty().addListener((obs, oldVal, newVal) -&gt; filterEvents());</span>
+<span class="nc" id="L106">        typeFilter.valueProperty().addListener((obs, oldVal, newVal) -&gt; filterEvents());</span>
+<span class="nc" id="L107">        dateFilter.valueProperty().addListener((obs, oldVal, newVal) -&gt; filterEvents());</span>
+<span class="nc" id="L108">    }</span>
+
+    private void loadEvents() {
+<span class="nc" id="L111">        ObservableList&lt;Evenement&gt; events = FXCollections.observableArrayList(</span>
+<span class="nc" id="L112">            gestionEvenements.getEvenements().values()</span>
+        );
+<span class="nc" id="L114">        filteredEvents = new FilteredList&lt;&gt;(events);</span>
+<span class="nc" id="L115">        eventTable.setItems(filteredEvents);</span>
+<span class="nc" id="L116">    }</span>
+
+    private void filterEvents() {
+<span class="nc" id="L119">        filteredEvents.setPredicate(event -&gt; {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">            boolean matchesSearch = searchField.getText().isEmpty() || </span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">                event.getNom().toLowerCase().contains(searchField.getText().toLowerCase());</span>
+            
+<span class="nc bnc" id="L123" title="All 2 branches missed.">            boolean matchesType = typeFilter.getValue().equals(&quot;Tous&quot;) || </span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">                event.getClass().getSimpleName().equals(typeFilter.getValue());</span>
+            
+<span class="nc bnc" id="L126" title="All 2 branches missed.">            boolean matchesDate = dateFilter.getValue() == null || </span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">                event.getDate().toLocalDate().equals(dateFilter.getValue());</span>
+            
+<span class="nc bnc" id="L129" title="All 6 branches missed.">            return matchesSearch &amp;&amp; matchesType &amp;&amp; matchesDate;</span>
+        });
+        
+<span class="nc" id="L132">        setupPagination();</span>
+<span class="nc" id="L133">    }</span>
+
+    private void setupPagination() {
+<span class="nc" id="L136">        int pageCount = (filteredEvents.size() + ITEMS_PER_PAGE - 1) / ITEMS_PER_PAGE;</span>
+<span class="nc" id="L137">        pagination.setPageCount(pageCount);</span>
+<span class="nc" id="L138">        pagination.setCurrentPageIndex(0);</span>
+<span class="nc" id="L139">        pagination.setPageFactory(this::createPage);</span>
+<span class="nc" id="L140">    }</span>
+
+    private Node createPage(int pageIndex) {
+<span class="nc" id="L143">        int fromIndex = pageIndex * ITEMS_PER_PAGE;</span>
+<span class="nc" id="L144">        int toIndex = Math.min(fromIndex + ITEMS_PER_PAGE, filteredEvents.size());</span>
+<span class="nc" id="L145">        eventTable.setItems(FXCollections.observableArrayList(</span>
+<span class="nc" id="L146">            filteredEvents.subList(fromIndex, toIndex)));</span>
+<span class="nc" id="L147">        return eventTable;</span>
+    }
+
+    @FXML
+    public void onCreateEvent() {
+        try {
+<span class="nc" id="L153">            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/view/EventDetailView.fxml&quot;));</span>
+<span class="nc" id="L154">            Parent root = loader.load();</span>
+<span class="nc" id="L155">            Stage stage = new Stage();</span>
+<span class="nc" id="L156">            stage.setTitle(&quot;Nouvel événement&quot;);</span>
+<span class="nc" id="L157">            stage.setScene(new Scene(root));</span>
+<span class="nc" id="L158">            stage.showAndWait();</span>
+            
+            // Recharge les événements après création
+<span class="nc" id="L161">            loadEvents();</span>
+<span class="nc" id="L162">        } catch (IOException e) {</span>
+<span class="nc" id="L163">            showError(&quot;Erreur lors de la création&quot;, e);</span>
+<span class="nc" id="L164">        }</span>
+<span class="nc" id="L165">    }</span>
+
+    @FXML
+    public void resetFilters() {
+<span class="nc" id="L169">        searchField.clear();</span>
+<span class="nc" id="L170">        typeFilter.setValue(&quot;Tous&quot;);</span>
+<span class="nc" id="L171">        dateFilter.setValue(null);</span>
+<span class="nc" id="L172">    }</span>
+
+    private void onEdit(Evenement event) {
+        // Ouvrir la fenêtre d'édition d'événement
+<span class="nc" id="L176">    }</span>
+
+    private void onDelete(Evenement event) {
+<span class="nc" id="L179">        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);</span>
+<span class="nc" id="L180">        alert.setTitle(&quot;Supprimer l'événement&quot;);</span>
+<span class="nc" id="L181">        alert.setHeaderText(&quot;Êtes-vous sûr de vouloir supprimer cet événement ?&quot;);</span>
+<span class="nc" id="L182">        alert.setContentText(&quot;Cette action est irréversible.&quot;);</span>
+
+<span class="nc" id="L184">        alert.showAndWait().ifPresent(response -&gt; {</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">            if (response == ButtonType.OK) {</span>
+<span class="nc" id="L186">                gestionEvenements.supprimerEvenement(event);</span>
+<span class="nc" id="L187">                loadEvents();</span>
+            }
+<span class="nc" id="L189">        });</span>
+<span class="nc" id="L190">    }</span>
+    
+    private void showError(String message, Exception e) {
+<span class="nc" id="L193">        Alert alert = new Alert(Alert.AlertType.ERROR);</span>
+<span class="nc" id="L194">        alert.setTitle(&quot;Erreur&quot;);</span>
+<span class="nc" id="L195">        alert.setHeaderText(message);</span>
+<span class="nc" id="L196">        alert.setContentText(e.getMessage());</span>
+<span class="nc" id="L197">        alert.showAndWait();</span>
+<span class="nc" id="L198">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

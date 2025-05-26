@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MainViewController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">event</a> &gt; <a href="index.source.html" class="el_package">com.projet_final.controller</a> &gt; <span class="el_source">MainViewController.java</span></div><h1>MainViewController.java</h1><pre class="source lang-java linenums">package com.projet_final.controller;
+
+import javafx.fxml.FXML;
+import javafx.scene.layout.StackPane;
+import javafx.scene.Node;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import java.io.IOException;
+import java.net.URL;
+
+<span class="nc" id="L15">public class MainViewController {</span>
+    // Injection des composants FXML
+    @FXML private StackPane contentPane;
+    @FXML private Button dashboardBtn;
+    @FXML private Button eventsBtn;
+    @FXML private Button participantsBtn;
+    @FXML private Button organisateursBtn;
+    @FXML private Button notificationsBtn;
+
+    /**
+     * Initialise le contrôleur et charge la vue par défaut
+     */
+    @FXML
+    public void initialize() {
+        try {
+            // Charge le dashboard par défaut au démarrage
+<span class="nc" id="L31">            showDashboard(null);</span>
+<span class="nc" id="L32">        } catch (Exception e) {</span>
+<span class="nc" id="L33">            showError(&quot;Erreur lors du chargement du tableau de bord&quot;, e);</span>
+<span class="nc" id="L34">        }</span>
+<span class="nc" id="L35">    }</span>
+
+    /**
+     * Affiche le tableau de bord
+     */
+    @FXML
+    public void showDashboard(ActionEvent event) {
+<span class="nc" id="L42">        loadAndSetContent(&quot;DashboardView&quot;);</span>
+<span class="nc" id="L43">    }</span>
+
+    /**
+     * Affiche la liste des événements
+     */
+    @FXML
+    public void showEvents(ActionEvent event) {
+<span class="nc" id="L50">        loadAndSetContent(&quot;EventListView&quot;);</span>
+<span class="nc" id="L51">    }</span>
+
+    /**
+     * Affiche la liste des participants
+     */
+    @FXML
+    public void showParticipants(ActionEvent event) {
+<span class="nc" id="L58">        loadAndSetContent(&quot;ParticipantListView&quot;);</span>
+<span class="nc" id="L59">    }</span>
+
+    /**
+     * Affiche la liste des organisateurs
+     */
+    @FXML
+    public void showOrganisateurs(ActionEvent event) {
+<span class="nc" id="L66">        loadAndSetContent(&quot;OrganisateurListView&quot;);</span>
+<span class="nc" id="L67">    }</span>
+
+    /**
+     * Affiche les notifications
+     */
+    @FXML
+    public void showNotifications(ActionEvent event) {
+<span class="nc" id="L74">        loadAndSetContent(&quot;NotificationView&quot;);</span>
+<span class="nc" id="L75">    }</span>
+
+    /**
+     * Charge et affiche une vue FXML
+     * @param viewName le nom de la vue sans extension ni chemin
+     */
+    private void loadAndSetContent(String viewName) {
+        try {
+            // Construit le chemin correct du fichier FXML
+<span class="nc" id="L84">            String fxmlPath = &quot;/view/&quot; + viewName + &quot;.fxml&quot;;</span>
+            
+            // Vérifie si le fichier existe
+<span class="nc" id="L87">            URL resource = getClass().getResource(fxmlPath);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">            if (resource == null) {</span>
+<span class="nc" id="L89">                throw new IOException(&quot;Fichier FXML non trouvé: &quot; + fxmlPath);</span>
+            }
+
+            // Charge la vue
+<span class="nc" id="L93">            FXMLLoader loader = new FXMLLoader(resource);</span>
+<span class="nc" id="L94">            Parent view = loader.load();</span>
+
+            // Vérifie si le chargement a réussi
+<span class="nc bnc" id="L97" title="All 2 branches missed.">            if (view == null) {</span>
+<span class="nc" id="L98">                throw new IOException(&quot;Échec du chargement de la vue: &quot; + viewName);</span>
+            }
+
+            // Met à jour le contenu
+<span class="nc" id="L102">            setContent(view);</span>
+<span class="nc" id="L103">        } catch (Exception e) {</span>
+<span class="nc" id="L104">            e.printStackTrace(); // Pour voir l'erreur complète</span>
+<span class="nc" id="L105">            showError(&quot;Erreur lors du chargement de la vue: &quot; + viewName, e);</span>
+<span class="nc" id="L106">        }</span>
+<span class="nc" id="L107">    }</span>
+
+    /**
+     * Met à jour le contenu de la zone principale
+     * @param node le nouveau contenu à afficher
+     */
+    private void setContent(Node node) {
+<span class="nc bnc" id="L114" title="All 4 branches missed.">        if (node != null &amp;&amp; contentPane != null) {</span>
+            // Efface l'ancien contenu et ajoute le nouveau
+<span class="nc" id="L116">            contentPane.getChildren().clear();</span>
+<span class="nc" id="L117">            contentPane.getChildren().add(node);</span>
+        } else {
+<span class="nc" id="L119">            showError(&quot;Erreur d'affichage&quot;, </span>
+                     new IllegalStateException(&quot;Node ou ContentPane est null&quot;));
+        }
+<span class="nc" id="L122">    }</span>
+
+    /**
+     * Affiche une boîte de dialogue d'erreur
+     * @param header le titre de l'erreur
+     * @param e l'exception à afficher
+     */
+    private void showError(String header, Exception e) {
+<span class="nc" id="L130">        Alert alert = new Alert(AlertType.ERROR);</span>
+<span class="nc" id="L131">        alert.setTitle(&quot;Erreur&quot;);</span>
+<span class="nc" id="L132">        alert.setHeaderText(header);</span>
+<span class="nc" id="L133">        alert.setContentText(e.getMessage());</span>
+        
+        // Log l'erreur pour le débogage
+<span class="nc" id="L136">        System.err.println(header);</span>
+<span class="nc" id="L137">        e.printStackTrace();</span>
+        
+<span class="nc" id="L139">        alert.showAndWait();</span>
+<span class="nc" id="L140">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

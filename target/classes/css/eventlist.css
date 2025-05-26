@@ -1,0 +1,108 @@
+/* Variables de couleurs */
+* {
+    -fx-primary: #2c3e50;
+    -fx-secondary: #3498db;
+    -fx-light-gray: #ecf0f1;
+    -fx-dark-gray: #7f8c8d;
+    -fx-success: #2ecc71;
+    -fx-warning: #f1c40f;
+    -fx-danger: #e74c3c;
+}
+
+/* Container principal */
+.event-list-container {
+    -fx-background-color: white;
+    -fx-padding: 20px;
+}
+
+/* En-tête */
+.header {
+    -fx-padding: 0 0 20 0;
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-primary;
+}
+
+/* Barre de recherche */
+.search-bar {
+    -fx-padding: 10px;
+    -fx-alignment: center-left;
+}
+
+.search-field-container {
+    -fx-background-color: -fx-light-gray;
+    -fx-background-radius: 20px;
+    -fx-padding: 5 15 5 15;
+    -fx-alignment: center-left;
+    -fx-spacing: 10;
+}
+
+.search-input {
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+}
+
+.search-icon {
+    -fx-icon-color: -fx-dark-gray;
+}
+
+/* Boutons */
+.create-button {
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: white;
+    -fx-background-radius: 20px;
+    -fx-padding: 8 20 8 20;
+}
+
+.create-button:hover {
+    -fx-background-color: derive(-fx-secondary, 10%);
+}
+
+.reset-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-dark-gray;
+}
+
+/* Tableau */
+.event-table {
+    -fx-background-color: white;
+    -fx-border-color: -fx-light-gray;
+    -fx-border-radius: 5px;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: derive(-fx-light-gray, 50%);
+}
+
+.table-row-cell:selected {
+    -fx-background-color: derive(-fx-secondary, 90%);
+}
+
+/* Boutons d'action dans le tableau */
+.action-button {
+    -fx-background-radius: 15px;
+    -fx-padding: 5 10 5 10;
+    -fx-font-size: 12px;
+}
+
+.edit-button {
+    -fx-background-color: -fx-warning;
+    -fx-text-fill: white;
+}
+
+.delete-button {
+    -fx-background-color: -fx-danger;
+    -fx-text-fill: white;
+}
+
+/* Pagination */
+.pagination {
+    -fx-padding: 10px;
+}

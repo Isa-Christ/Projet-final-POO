@@ -1,4 +1,3 @@
-// filepath: /home/isahime/Desktop/Projet_final_POO/event/src/main/java/com/projet_final/model/Conference.java
 package com.projet_final.model;
 
 import java.time.LocalDateTime;
@@ -6,13 +5,14 @@ import java.util.List;
 
 public class Conference extends Evenement {
     private String theme;
+    //definir la liste des intervenants proper a chaque conference
     private List<Intervenant> intervenants;
     
     //constructeurs par défaut
     public Conference() {
         super();
     }
-
+    //constructeurs avec parametres
     public Conference(String id, String nom, LocalDateTime date, String lieu, int capaciteMax, String theme, List<Intervenant> intervenants) {
         super(id, nom, date, lieu, capaciteMax);
         this.theme = theme;

@@ -1,14 +1,18 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+event,com.projet_final.controller,EventListController,394,0,20,0,90,0,36,0,26,0
+event,com.projet_final.controller,EventListController.new TableCell() {...},111,0,2,0,12,0,5,0,4,0
+event,com.projet_final.controller,MainViewController,127,0,8,0,43,0,14,0,10,0
+event,com.projet_final.controller,DashboardController,135,0,2,0,38,0,13,0,12,0
 event,com.projet_final.service,GestionEvenements,64,0,4,0,17,0,10,0,8,0
 event,com.projet_final.exception,EvenementDejaExistantException,4,0,0,0,2,0,1,0,1,0
 event,com.projet_final.exception,CapaciteMaxAtteinteException,4,0,0,0,2,0,1,0,1,0
-event,com.projet_final,App,38,0,0,0,11,0,5,0,5,0
+event,com.projet_final,App,30,0,0,0,9,0,3,0,3,0
 event,com.projet_final.model,Intervenant,16,0,0,0,6,0,3,0,3,0
-event,com.projet_final.model,Organisateur,24,0,0,0,8,0,4,0,4,0
-event,com.projet_final.model,Evenement,60,39,1,1,21,12,14,2,13,2
+event,com.projet_final.model,Organisateur,20,0,0,0,6,0,3,0,3,0
+event,com.projet_final.model,Evenement,57,42,1,1,20,13,13,3,12,3
 event,com.projet_final.model,Participant,0,40,0,0,0,16,0,8,0,8
-event,com.projet_final.model,Conference,30,14,0,0,10,4,6,1,6,1
-event,com.projet_final.model,Concert,46,0,0,0,14,0,7,0,7,0
+event,com.projet_final.model,Conference,28,14,0,0,9,4,6,1,6,1
+event,com.projet_final.model,Concert,44,0,0,0,13,0,7,0,7,0
 event,com.projet_final.util,JsonUtil.new TypeReference() {...},3,0,0,0,1,0,1,0,1,0
 event,com.projet_final.util,JsonUtil,38,0,0,0,8,0,4,0,4,0
 event,com.projet_final.util,JsonUtil.new TypeReference() {...},3,0,0,0,1,0,1,0,1,0

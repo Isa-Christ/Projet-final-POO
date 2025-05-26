@@ -1,4 +1,5 @@
 /home/isahime/Desktop/Projet_final_POO/event/src/main/java/com/projet_final/service/NotificationService.java
+/home/isahime/Desktop/Projet_final_POO/event/src/main/java/com/projet_final/controller/EventListController.java
 /home/isahime/Desktop/Projet_final_POO/event/src/main/java/com/projet_final/util/JsonUtil.java
 /home/isahime/Desktop/Projet_final_POO/event/src/main/java/com/projet_final/util/EvenementObservable.java
 /home/isahime/Desktop/Projet_final_POO/event/src/main/java/com/projet_final/App.java
@@ -11,5 +12,7 @@
 /home/isahime/Desktop/Projet_final_POO/event/src/main/java/com/projet_final/model/Intervenant.java
 /home/isahime/Desktop/Projet_final_POO/event/src/main/java/com/projet_final/exception/EvenementDejaExistantException.java
 /home/isahime/Desktop/Projet_final_POO/event/src/main/java/com/projet_final/util/ParticipantObserver.java
+/home/isahime/Desktop/Projet_final_POO/event/src/main/java/com/projet_final/controller/DashboardController.java
+/home/isahime/Desktop/Projet_final_POO/event/src/main/java/com/projet_final/controller/MainViewController.java
 /home/isahime/Desktop/Projet_final_POO/event/src/main/java/com/projet_final/model/Evenement.java
 /home/isahime/Desktop/Projet_final_POO/event/src/main/java/com/projet_final/exception/CapaciteMaxAtteinteException.java
