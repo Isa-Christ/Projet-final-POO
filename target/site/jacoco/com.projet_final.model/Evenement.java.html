@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Evenement.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">event</a> &gt; <a href="index.source.html" class="el_package">com.projet_final.model</a> &gt; <span class="el_source">Evenement.java</span></div><h1>Evenement.java</h1><pre class="source lang-java linenums">package com.projet_final.model;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes; 
+import com.projet_final.exception.CapaciteMaxAtteinteException;
+import com.projet_final.util.EvenementObservable;
+
+
+//annotations pour specifier au fichier Json les classes filles
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = &quot;type&quot;
+)
+
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Concert.class, name = &quot;concert&quot;),
+    @JsonSubTypes.Type(value = Conference.class, name = &quot;conference&quot;)
+})
+
+public abstract class Evenement extends EvenementObservable{
+    protected String id;
+    protected String nom;
+    protected LocalDateTime date;
+    protected String lieu;
+    protected int capaciteMax;
+<span class="pc" id="L31">    protected List&lt;Participant&gt; participants = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L33">    public Evenement(){}</span>
+
+    //constructeur avec parametres
+<span class="fc" id="L36">    public Evenement(String id, String nom, LocalDateTime date, String lieu, int capaciteMax) {</span>
+<span class="fc" id="L37">        this.id = id;</span>
+<span class="fc" id="L38">        this.nom = nom;</span>
+<span class="fc" id="L39">        this.date = date;</span>
+<span class="fc" id="L40">        this.lieu = lieu;</span>
+<span class="fc" id="L41">        this.capaciteMax = capaciteMax;</span>
+<span class="fc" id="L42">    }</span>
+
+    // Getters et setters
+
+    public String getId() {
+<span class="nc" id="L47">        return id;</span>
+    }
+
+    public void setId(String id) {
+<span class="nc" id="L51">        this.id = id;</span>
+<span class="nc" id="L52">    }</span>
+
+    public String getNom() {
+<span class="nc" id="L55">        return nom;</span>
+    }
+
+    public void setNom(String nom) {
+<span class="nc" id="L59">        this.nom = nom;</span>
+<span class="nc" id="L60">    }</span>
+
+    public LocalDateTime getDate() {
+        
+<span class="nc" id="L64">        return date;</span>
+    }
+
+    public void setDate(LocalDateTime date) {
+<span class="nc" id="L68">        this.date = date;</span>
+<span class="nc" id="L69">    }</span>
+
+    public String getLieu() {
+<span class="nc" id="L72">        return lieu;</span>
+    }
+
+    public void setLieu(String lieu) {
+<span class="nc" id="L76">        this.lieu = lieu;</span>
+<span class="nc" id="L77">    }</span>
+
+    public int getCapaciteMax() {
+<span class="nc" id="L80">        return capaciteMax;</span>
+    }
+
+    public void setCapaciteMax(int capaciteMax) {
+<span class="nc" id="L84">        this.capaciteMax = capaciteMax;</span>
+<span class="nc" id="L85">    }</span>
+
+    
+    public boolean ajouterParticipant(Participant participant) throws CapaciteMaxAtteinteException {
+        
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (participants.size() &lt; capaciteMax) {</span>
+            //ajouter le participant à la liste des participants à l'événement.
+<span class="fc" id="L92">            participants.add(participant);</span>
+
+            //ajouter le participant à la liste des observateurs pour qu'il puisse recevoir les notifications.
+<span class="fc" id="L95">            this.addObserver(participant);</span>
+<span class="fc" id="L96">            return true;</span>
+
+        } else {
+<span class="nc" id="L99">            throw new CapaciteMaxAtteinteException(&quot;La capacité maximale pour cet événement est atteinte&quot;);</span>
+        }
+    }
+
+    public void annuler() {
+        //envoyer une notification d'annulation de l'événement.
+<span class="nc" id="L105">        this.notifyObserver(&quot; l'événement &quot;+getNom()+&quot; a été annulé.&quot;);</span>
+
+        //vider la liste des participants.
+<span class="nc" id="L108">        participants.clear();</span>
+<span class="nc" id="L109">    }</span>
+
+
+    public abstract void afficherDetails();
+
+
+    public List&lt;Participant&gt; getParticipants() {
+<span class="nc" id="L116">        return participants;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.projet_final.controller.DashboardController" spacing="20" alignment="TOP_CENTER" style="-fx-padding: 30;">
+    <Label text="Tableau de bord" style="-fx-font-size: 24;"/>
+    <HBox spacing="30">
+        <VBox>
+            <Label text="Événements à venir"/>
+            <Label fx:id="eventCountLabel"/>
+        </VBox>
+        <VBox>
+            <Label text="Participants"/>
+            <Label fx:id="participantCountLabel"/>
+        </VBox>
+        <VBox>
+            <Label text="Notifications non lues"/>
+            <Label fx:id="notificationCountLabel"/>
+        </VBox>
+    </HBox>
+    <Label text="Notifications récentes"/>
+    <ListView fx:id="notificationList"/>
+</VBox>

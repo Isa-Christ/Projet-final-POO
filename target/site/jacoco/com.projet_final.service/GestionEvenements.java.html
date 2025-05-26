@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GestionEvenements.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">event</a> &gt; <a href="index.source.html" class="el_package">com.projet_final.service</a> &gt; <span class="el_source">GestionEvenements.java</span></div><h1>GestionEvenements.java</h1><pre class="source lang-java linenums">package com.projet_final.service;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.projet_final.exception.EvenementDejaExistantException;
+import com.projet_final.model.Evenement;
+import com.projet_final.util.JsonUtil;
+
+public class GestionEvenements {
+    private static GestionEvenements instance;
+<span class="nc" id="L13">    private Map&lt;String, Evenement&gt; evenements = new HashMap&lt;&gt;();</span>
+
+<span class="nc" id="L15">    public GestionEvenements() {}</span>
+
+    public static GestionEvenements getInstance() {
+<span class="nc bnc" id="L18" title="All 2 branches missed.">        if (instance == null) {</span>
+<span class="nc" id="L19">            instance = new GestionEvenements();</span>
+        }
+<span class="nc" id="L21">        return instance;</span>
+    }
+
+    public void ajouterEvenement(Evenement evenement) throws EvenementDejaExistantException {
+        //verfier si l'événement est déjà dans la liste sinon l'ajoute à la liste.
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        if (evenements.containsKey(evenement.getId())) {</span>
+            //genere l'exception qui specifie que l'événement existe déjà.
+<span class="nc" id="L28">            throw new EvenementDejaExistantException(&quot;L'événement que vous essayez d'ajouter existe déjà.&quot;);</span>
+        } else {
+<span class="nc" id="L30">            evenements.put(evenement.getId(), evenement);</span>
+        }
+<span class="nc" id="L32">    }</span>
+
+    public void supprimerEvenement(Evenement e) {
+        //enleve l'evenement de la liste 
+<span class="nc" id="L36">        evenements.remove(e.getId());</span>
+<span class="nc" id="L37">    }</span>
+
+    public Evenement rechercherEvenement(String id) {
+<span class="nc" id="L40">        return evenements.get(id);</span>
+    }
+
+    public Map&lt;String, Evenement&gt; getEvenements() {
+<span class="nc" id="L44">        return evenements;</span>
+    }
+
+    public void saveToFile(String filepath) throws IOException{
+<span class="nc" id="L48">        JsonUtil.saveEvenements(evenements, filepath);</span>
+<span class="nc" id="L49">    }</span>
+
+    public void loadFromFile(String filepath) throws IOException{
+<span class="nc" id="L52">        evenements = new HashMap&lt;&gt;(JsonUtil.loadEvenements(filepath));</span>
+<span class="nc" id="L53">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

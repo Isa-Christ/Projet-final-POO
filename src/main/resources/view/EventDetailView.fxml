@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.projet_final.controller.EventDetailController" spacing="15" style="-fx-padding: 20;">
+    <Label fx:id="eventTitle" style="-fx-font-size: 20;"/>
+    <Label fx:id="eventInfo"/>
+    <HBox spacing="10">
+        <Button text="Modifier" onAction="#onEdit"/>
+        <Button text="Supprimer" onAction="#onDelete"/>
+        <Button text="Annuler" onAction="#onCancel"/>
+        <Button text="Notifier les participants" onAction="#onNotify"/>
+    </HBox>
+    <Label text="Participants"/>
+    <ListView fx:id="participantList"/>
+    <Label text="Intervenants" visible="${eventType == 'conference'}"/>
+    <ListView fx:id="intervenantList" visible="${eventType == 'conference'}"/>
+    <Label text="Historique des notifications"/>
+    <ListView fx:id="notificationHistory"/>
+</VBox>

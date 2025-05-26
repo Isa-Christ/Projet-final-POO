@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Participant.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">event</a> &gt; <a href="index.source.html" class="el_package">com.projet_final.model</a> &gt; <span class="el_source">Participant.java</span></div><h1>Participant.java</h1><pre class="source lang-java linenums">package com.projet_final.model;
+
+import com.projet_final.util.ParticipantObserver;
+
+public class Participant implements ParticipantObserver{
+    protected String id;
+    protected String nom;
+    protected String email;
+
+<span class="fc" id="L10">    public Participant(String id, String nom, String email) {</span>
+<span class="fc" id="L11">        this.id = id;</span>
+<span class="fc" id="L12">        this.nom = nom;</span>
+<span class="fc" id="L13">        this.email = email;</span>
+<span class="fc" id="L14">    }</span>
+
+    //Getters et Setters
+
+    public String getId() {
+<span class="fc" id="L19">        return id;</span>
+    }
+
+    public void setId(String id) {
+<span class="fc" id="L23">        this.id = id;</span>
+<span class="fc" id="L24">    }</span>
+
+    public String getNom() {
+<span class="fc" id="L27">        return nom;</span>
+    }
+
+    public void setNom(String nom) {
+<span class="fc" id="L31">        this.nom = nom;</span>
+<span class="fc" id="L32">    }</span>
+
+    public String getEmail() {
+<span class="fc" id="L35">        return email;</span>
+    }
+
+    public void setEmail(String email) {
+<span class="fc" id="L39">        this.email = email;</span>
+<span class="fc" id="L40">    }</span>
+
+    //implementation de la methode pour recevoir une notification
+    public void update(String message){
+<span class="fc" id="L44">        System.out.println(&quot;Cher participant &quot;+ getNom()+&quot; nous vous informons que :&quot; +message); </span>
+<span class="fc" id="L45">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

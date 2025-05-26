@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.projet_final.controller.EventListController" spacing="10" style="-fx-padding: 20;">
+    <HBox spacing="10">
+        <TextField fx:id="searchField" promptText="Rechercher un événement..."/>
+        <Button text="Créer un événement" onAction="#onCreateEvent"/>
+    </HBox>
+    <TableView fx:id="eventTable" prefHeight="400">
+        <columns>
+            <TableColumn text="Nom" fx:id="colNom"/>
+            <TableColumn text="Date" fx:id="colDate"/>
+            <TableColumn text="Lieu" fx:id="colLieu"/>
+            <TableColumn text="Type" fx:id="colType"/>
+            <TableColumn text="Actions" fx:id="colActions"/>
+        </columns>
+    </TableView>
+</VBox>

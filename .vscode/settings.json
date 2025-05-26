@@ -1,0 +1,6 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.autobuild.enabled": false,
+    "files.autoSave": "onFocusChange",
+    "java.maxConcurrentBuilds": 1
+}
